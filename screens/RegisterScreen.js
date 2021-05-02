@@ -6,6 +6,7 @@ import {
 	View,
 } from "react-native";
 import { Button, Input, Image, Text } from "react-native-elements";
+import { auth } from "../utils/firebase";
 
 const RegisterScreen = ({ navigation }) => {
 	const [name, setName] = useState("");
@@ -19,7 +20,19 @@ const RegisterScreen = ({ navigation }) => {
 		});
 	}, [navigation]);
 
-	const funcRegisterUser = () => {};
+	const funcRegisterUser = () => {
+		auth
+			.createUserWithPasswordAndEmail(email, password)
+			.then((authUser) => {
+				authUser.user.update({
+					displayName: name,
+					photoURL:
+						profilePic ||
+						"https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
+				});
+			})
+			.catch((err) => alert(err.message));
+	};
 
 	return (
 		<KeyboardAvoidingView behavior="padding" style={styles.container}>
