@@ -3,12 +3,17 @@ import React, { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
 import { Button, Input, Image } from "react-native-elements";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	// sign in
 	const funcSignIn = () => {};
+
+	// register screen
+	const funcNavToRegister = () => {
+		navigation.navigate("Register");
+	};
 
 	return (
 		<KeyboardAvoidingView behavior="padding" style={styles.loginContainer}>
@@ -44,6 +49,7 @@ const LoginScreen = () => {
 			<Button
 				containerStyle={styles.button}
 				type="outline"
+				onPress={funcNavToRegister}
 				title="Create Account"
 			/>
 			<View style={{ height: 10 }} />
