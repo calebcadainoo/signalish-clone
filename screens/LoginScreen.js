@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
 	};
 
 	return (
-		<KeyboardAvoidingView behavior="padding" style={styles.loginContainer}>
+		<KeyboardAvoidingView behavior="padding" style={styles.container}>
 			<StatusBar style="light" />
 			<Image
 				source={{
@@ -61,7 +61,7 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
 	appLogo: { width: 100, height: 100 },
-	loginContainer: {
+	container: {
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
