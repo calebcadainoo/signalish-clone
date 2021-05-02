@@ -12,7 +12,7 @@ const RegisterScreen = ({ navigation }) => {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [profilePic, setProfilePic] = useState("");
+	const [photoUrl, setPhotoUrl] = useState("");
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
@@ -22,12 +22,12 @@ const RegisterScreen = ({ navigation }) => {
 
 	const funcRegisterUser = () => {
 		auth
-			.createUserWithPasswordAndEmail(email, password)
+			.createUserWithEmailAndPassword(email, password)
 			.then((authUser) => {
-				authUser.user.update({
+				authUser.user.updateProfile({
 					displayName: name,
 					photoURL:
-						profilePic ||
+						photoUrl ||
 						"https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
 				});
 			})
@@ -71,8 +71,8 @@ const RegisterScreen = ({ navigation }) => {
 				<Input
 					placeholder="Profile Pic URL (optional)"
 					type="text"
-					value={profilePic}
-					onChangeText={(text) => setProfilePic(text)}
+					value={photoUrl}
+					onChangeText={(text) => setPhotoUrl(text)}
 					onSubmitEditing={funcRegisterUser} // submit form when user press enter
 				/>
 			</View>
