@@ -12,18 +12,27 @@ import CustomListItem from "../components/CustomListItem";
 import { auth, db } from "../utils/firebase";
 
 const HomeScreen = ({ navigation }) => {
+	const funcLogoutUser = () => {
+		alert("YOU ARE BEING LOGGED OUT");
+		auth.signOut().then(() => {
+			navigation.replace("Login");
+		});
+	};
+
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			title: "Signal Clone",
-			headerStyle: { backgroundColor: "#fa0" },
-			headerTitleStyle: { color: "black" },
-			headerTintColor: "black",
+			// headerStyle: { backgroundColor: "#fa0" },
+			// headerTitleStyle: { color: "black" },
+			// headerTintColor: "black",
 			headerLeft: () => {
-				<View style={{ marginLeft: 20 }}>
-					<TouchableOpacity activeOpacity={0.5}>
-						<Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
-					</TouchableOpacity>
-				</View>;
+				return (
+					<View style={{ marginLeft: 15 }}>
+						<TouchableOpacity activeOpacity={0.5} onPress={funcLogoutUser}>
+							<Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
+						</TouchableOpacity>
+					</View>
+				);
 			},
 		});
 	}, []);
