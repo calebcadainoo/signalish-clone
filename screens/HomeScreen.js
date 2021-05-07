@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from "react-native";
 import { Avatar } from "react-native-elements";
 import CustomListItem from "../components/CustomListItem";
+import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 import { auth, db } from "../utils/firebase";
 
 const HomeScreen = ({ navigation }) => {
@@ -34,8 +35,30 @@ const HomeScreen = ({ navigation }) => {
 					</View>
 				);
 			},
+			headerRight: () => {
+				return (
+					<View
+						style={{
+							marginRight: 17,
+							flexDirection: "row",
+							justifyContent: "space-between",
+							width: 60,
+						}}
+					>
+						<TouchableOpacity activeOpacity={0.5}>
+							{/* <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} /> */}
+							<AntDesign name="camerao" size={24} color="#fff" />
+						</TouchableOpacity>
+
+						<TouchableOpacity activeOpacity={0.5}>
+							{/* <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} /> */}
+							<SimpleLineIcons name="pencil" size={20} color="#fff" />
+						</TouchableOpacity>
+					</View>
+				);
+			},
 		});
-	}, []);
+	}, [navigation]);
 
 	return (
 		<SafeAreaView>
