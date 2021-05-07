@@ -1,9 +1,33 @@
-import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useLayoutEffect } from "react";
+import {
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native";
+import { Avatar } from "react-native-elements";
 import CustomListItem from "../components/CustomListItem";
+import { auth, db } from "../utils/firebase";
 
-const Home = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			title: "Signal Clone",
+			headerStyle: { backgroundColor: "#fa0" },
+			headerTitleStyle: { color: "black" },
+			headerTintColor: "black",
+			headerLeft: () => {
+				<View style={{ marginLeft: 20 }}>
+					<TouchableOpacity>
+						<Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
+					</TouchableOpacity>
+				</View>
+			},
+		});
+	}, []);
+
 	return (
 		<SafeAreaView>
 			<ScrollView>
@@ -13,6 +37,6 @@ const Home = ({ navigation }) => {
 	);
 };
 
-export default Home;
+export default HomeScreen;
 
 const styles = StyleSheet.create({});
