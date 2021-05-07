@@ -20,10 +20,10 @@ const HomeScreen = ({ navigation }) => {
 			headerTintColor: "black",
 			headerLeft: () => {
 				<View style={{ marginLeft: 20 }}>
-					<TouchableOpacity>
+					<TouchableOpacity activeOpacity={0.5}>
 						<Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
 					</TouchableOpacity>
-				</View>
+				</View>;
 			},
 		});
 	}, []);

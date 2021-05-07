@@ -21,7 +21,9 @@ const LoginScreen = ({ navigation }) => {
 	}, []);
 
 	// sign in
-	const funcSignIn = () => {};
+	const funcSignIn = () => {
+		auth.signInWithEmailAndPassword(email, password).catch((err) => alert(err));
+	};
 
 	// register screen
 	const funcNavToRegister = () => {
@@ -52,6 +54,7 @@ const LoginScreen = ({ navigation }) => {
 					type="password"
 					value={password}
 					onChangeText={(text) => setPassword(text)}
+					onSubmitEditing={funcSignIn}
 				/>
 			</View>
 			<Button
