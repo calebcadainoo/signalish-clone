@@ -46,12 +46,15 @@ const HomeScreen = ({ navigation }) => {
 						}}
 					>
 						<TouchableOpacity activeOpacity={0.5}>
-							{/* <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} /> */}
 							<AntDesign name="camerao" size={24} color="#fff" />
 						</TouchableOpacity>
 
-						<TouchableOpacity activeOpacity={0.5}>
-							{/* <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} /> */}
+						<TouchableOpacity
+							activeOpacity={0.5}
+							onPress={() => {
+								navigation.navigate("AddChat");
+							}}
+						>
 							<SimpleLineIcons name="pencil" size={20} color="#fff" />
 						</TouchableOpacity>
 					</View>
