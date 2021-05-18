@@ -15,12 +15,25 @@ import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native";
 import { Platform } from "react-native";
 import { Keyboard } from "react-native";
+import * as firebase from "firebase";
+import { auth, db } from "../utils/firebase";
 
 const ChatScreen = ({ navigation, route }) => {
 	const [input, setInput] = useState("");
+	const [messges, setMessges] = useState([]);
 
 	const funcSendMsg = () => {
 		Keyboard.dismiss();
+
+		db.collection("chats").doc(route.params.id).collection("messages").add({
+			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+			message: input,
+			displayName: auth.currentUser.displayName,
+			email: auth.currentUser.email,
+			photoURL: auth.currentUser.photoURL,
+		});
+
+		setInput("");
 	};
 
 	useLayoutEffect(() => {
@@ -74,6 +87,24 @@ const ChatScreen = ({ navigation, route }) => {
 		});
 	});
 
+	useLayoutEffect(() => {
+		const unsubscribe = db
+			.collection("chats")
+			.doc(route.params.id)
+			.collection("messages")
+			.orderBy("timestamp", "desc")
+			.onSnapshot((snapshot) =>
+				setMessges(
+					snapshot.docs.map((doc) => ({
+						id: doc.id,
+						data: doc.data(),
+					}))
+				)
+			);
+
+		return unsubscribe;
+	}, [route]);
+
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
 			<StatusBar style="light" />
@@ -82,17 +113,60 @@ const ChatScreen = ({ navigation, route }) => {
 				style={styles.container}
 				keyboardVerticalOffset={90}
 			>
-				<TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
+				<TouchableWithoutFeedback>
 					<>
-						<ScrollView>
+						<ScrollView paddingTop={10}>
 							{/* chats here */}
-							<Text>{route.params.chatName}</Text>
+							{messges.map(({ id, data }) =>
+								data.email === auth.currentUser.email ? (
+									<View key={id} style={styles.receiver}>
+										<Avatar
+											rounded
+											position="absolute"
+											right={-5}
+											bottom={-5}
+											// WEB Hack
+											containerStyle={{
+												position: "absolute",
+												right: -5,
+												bottom: -5,
+											}}
+											size={20}
+											source={{
+												uri: data.photoURL,
+											}}
+										/>
+										<Text style={styles.receiverText}>{data.message}</Text>
+									</View>
+								) : (
+									<View key={id} style={styles.sender}>
+										<Avatar
+											rounded
+											position="absolute"
+											left={-5}
+											bottom={-5}
+											// WEB Hack
+											containerStyle={{
+												position: "absolute",
+												left: -5,
+												bottom: -5,
+											}}
+											size={20}
+											source={{
+												uri: data.photoURL,
+											}}
+										/>
+										<Text style={styles.senderText}>{data.message}</Text>
+									</View>
+								)
+							)}
 						</ScrollView>
 
 						<View style={styles.footer}>
 							{/* footer with msg box */}
 							<TextInput
 								onChangeText={(text) => setInput(text)}
+								onSubmitEditing={funcSendMsg}
 								value={input}
 								style={styles.textInput}
 								placeholder="Type a message..."
@@ -113,6 +187,44 @@ export default ChatScreen;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+	},
+	receiver: {
+		padding: 15,
+		backgroundColor: "#ECECEC",
+		alignSelf: "flex-end",
+		borderRadius: 20,
+		marginRight: 15,
+		marginBottom: 20,
+		maxWidth: "80%",
+		position: "relative",
+	},
+	receiverText: {
+		color: "black",
+		fontWeight: "500",
+		marginLeft: 10,
+		marginBottom: 15,
+	},
+	sender: {
+		padding: 15,
+		backgroundColor: "#2B68E6",
+		alignSelf: "flex-start",
+		borderRadius: 20,
+		marginLeft: 15,
+		marginBottom: 20,
+		maxWidth: "80%",
+		position: "relative",
+	},
+	senderText: {
+		color: "white",
+		fontWeight: "500",
+		marginLeft: 10,
+		marginBottom: 15,
+	},
+	senderName: {
+		left: 10,
+		paddingRight: 10,
+		fontSize: 10,
+		color: "white",
 	},
 	footer: {
 		flexDirection: "row",
