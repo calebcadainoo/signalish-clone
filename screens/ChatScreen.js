@@ -20,7 +20,7 @@ import { auth, db } from "../utils/firebase";
 
 const ChatScreen = ({ navigation, route }) => {
 	const [input, setInput] = useState("");
-	const [messges, setMessges] = useState([]);
+	const [messages, setMessages] = useState([]);
 
 	const funcSendMsg = () => {
 		Keyboard.dismiss();
@@ -51,7 +51,9 @@ const ChatScreen = ({ navigation, route }) => {
 					<Avatar
 						rounded
 						source={{
-							uri: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
+							uri:
+								messages[0]?.data.photoURL ||
+								"https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
 						}}
 					/>
 					<Text style={{ color: "white", marginLeft: 10, fontWeight: "600" }}>
@@ -85,7 +87,7 @@ const ChatScreen = ({ navigation, route }) => {
 				</View>
 			),
 		});
-	});
+	}, [navigation, messages]);
 
 	useLayoutEffect(() => {
 		const unsubscribe = db
@@ -94,7 +96,7 @@ const ChatScreen = ({ navigation, route }) => {
 			.collection("messages")
 			.orderBy("timestamp", "desc")
 			.onSnapshot((snapshot) =>
-				setMessges(
+				setMessages(
 					snapshot.docs.map((doc) => ({
 						id: doc.id,
 						data: doc.data(),
@@ -117,7 +119,7 @@ const ChatScreen = ({ navigation, route }) => {
 					<>
 						<ScrollView contentContainerStyle={{ paddingTop: 10 }}>
 							{/* chats here */}
-							{messges.map(({ id, data }) =>
+							{messages.map(({ id, data }) =>
 								data.email === auth.currentUser.email ? (
 									<View key={id} style={styles.receiver}>
 										<Avatar
