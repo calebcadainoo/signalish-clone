@@ -115,7 +115,7 @@ const ChatScreen = ({ navigation, route }) => {
 			>
 				<TouchableWithoutFeedback>
 					<>
-						<ScrollView paddingTop={10}>
+						<ScrollView contentContainerStyle={{ paddingTop: 10 }}>
 							{/* chats here */}
 							{messges.map(({ id, data }) =>
 								data.email === auth.currentUser.email ? (
