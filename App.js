@@ -9,17 +9,17 @@ import RegisterScreen from "./screens/RegisterScreen";
 import HomeScreen from "./screens/HomeScreen";
 import AddChatScreen from "./screens/AddChatScreen";
 import ChatScreen from "./screens/ChatScreen";
-import { LogBox } from "react-native";
-import _ from "lodash";
+// import { LogBox } from "react-native";
+// import _ from "lodash";
 
 // removes setting timer warning
-LogBox.ignoreWarnings(["Setting a timer"]);
-const _console = _.clone(console);
-console.warn = (message) => {
-	if (message.indexOf("Setting a timer") <= -1) {
-		_console.warn(message);
-	}
-};
+// LogBox.ignoreWarnings(["Setting a timer"]);
+// const _console = _.clone(console);
+// console.warn = (message) => {
+// 	if (message.indexOf("Setting a timer") <= -1) {
+// 		_console.warn(message);
+// 	}
+// };
 
 const Stack = createStackNavigator();
 

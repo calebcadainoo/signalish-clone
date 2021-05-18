@@ -1,5 +1,6 @@
 // import * as firebase from "firebase";
 import firebase from "firebase/app";
+// import "firebase/analytics";
 
 // Optionally import the services that you want to use
 import "firebase/auth";
@@ -28,4 +29,5 @@ if (firebase.apps.length === 0) {
 
 const db = app.firestore();
 const auth = firebase.auth();
+
 export { db, auth };
