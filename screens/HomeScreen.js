@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
 	ScrollView,
 	StyleSheet,
@@ -86,6 +87,7 @@ const HomeScreen = ({ navigation }) => {
 
 	return (
 		<SafeAreaView>
+			<StatusBar style="light" />
 			<ScrollView style={styles.container}>
 				{chats.map(({ id, data: { chatName } }) => (
 					<CustomListItem
