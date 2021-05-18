@@ -157,6 +157,7 @@ const ChatScreen = ({ navigation, route }) => {
 											}}
 										/>
 										<Text style={styles.senderText}>{data.message}</Text>
+										<Text style={styles.senderName}>{data.displayName}</Text>
 									</View>
 								)
 							)}
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
 		color: "black",
 		fontWeight: "500",
 		marginLeft: 10,
-		marginBottom: 15,
+		// marginBottom: 15,
 	},
 	sender: {
 		padding: 15,
@@ -218,13 +219,14 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontWeight: "500",
 		marginLeft: 10,
-		marginBottom: 15,
+		marginBottom: 5,
 	},
 	senderName: {
 		left: 10,
 		paddingRight: 10,
 		fontSize: 10,
 		color: "white",
+		opacity: 0.7,
 	},
 	footer: {
 		flexDirection: "row",
