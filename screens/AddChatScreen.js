@@ -39,8 +39,12 @@ const AddChatScreen = ({ navigation }) => {
 				}
 				onSubmitEditing={funcCreateChat}
 			/>
-			<Button title="Create New Chat" onPress={funcCreateChat} />
-			<Text>New chats yels</Text>
+			<Button
+				disabled={!chatName}
+				title="Create New Chat"
+				onPress={funcCreateChat}
+			/>
+			{/* <Text>New chats yels</Text> */}
 		</SafeAreaView>
 	);
 };
