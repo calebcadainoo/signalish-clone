@@ -35,15 +35,20 @@ const CustomListItem = ({ id, chatName, funcEnterChat }) => {
 			/>
 			<ListItem.Content>
 				<ListItem.Title
-					style={{ fontWeight: "600" }}
+					style={{ fontWeight: "600", marginBottom: 3 }}
 					numberOfLines={1}
 					ellipsizeMode="tail"
 				>
 					{chatName}
 				</ListItem.Title>
 
-				<ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
-					{chatMsgs?.[0]?.message || "Hello y'all"}
+				<ListItem.Subtitle
+					numberOfLines={1}
+					ellipsizeMode="tail"
+					style={{ opacity: 0.8 }}
+				>
+					{`${chatMsgs?.[0]?.displayName}: ${chatMsgs?.[0]?.message}` ||
+						"Hello y'all"}
 				</ListItem.Subtitle>
 			</ListItem.Content>
 		</ListItem>
